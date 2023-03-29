@@ -1088,6 +1088,9 @@ contains
     real*8 :: a1,a2,a3,a4,a5,a6,a7
     real*8 :: b2,b3,b4,b5,b6,b7,eng0
 
+    double precision :: lum3d_zrange 
+    double precision, dimension(2) :: zrange4lum3d
+
     call starttime_Timer(t0)
     call MPI_BARRIER(mpicommwd,ierr)
     time0 = MPI_WTIME()
@@ -1131,6 +1134,9 @@ contains
     nxlum = 256 !//Grid number of x for luminosity calculation
     nylum = 256 !//Grid number of y for luminosity calculation
     lum3d = 0.0
+    lum3d_zrange = 0.0
+    zrange4lum3d(1) = -999999.0
+    zrange4lum3d(2) =  999999.0
 
     eps = 1.0d-4 !//extra boundary
     factor = 8.0d0 !//scaling factor for the maximum # of particles per slice (tolerance for unequal distribution)
@@ -1438,7 +1444,7 @@ contains
                          call bbmSlcnew_Beambeam(nprow,npyhalf,innx,inny,Nslice1,Nslice2,&
                               Nslice,NsliceO,jendmax,Nplocal,myidx,myidy,Bpts,grid2d,&
                               Ageom,zmin,zmax,Np,coef,Ny1,commrow,commcol,nz,maxpts1,shift,&
-                              Bcurr,flaglum,lum3d)
+                              Bcurr,flaglum,lum3d,lum3d_zrange,zrange4lum3d)
                       endif
                    endif
                 endif
@@ -1480,7 +1486,7 @@ contains
                 !// Save 3D luminosity
                 if(flaglum==1) then
                    if(myid.eq.0) then 
-                      write(lumFile,'(1x,i9.1,1x,i9.1,1x,i9.1,1x,i9.1,es16.6)')i,ic,idbunch,idbuncho,lum3d
+                      write(lumFile,'(1x,i9.1,1x,i9.1,1x,i9.1,1x,i9.1,es16.6,es16.6)')i,ic,idbunch,idbuncho,lum3d,lum3d_zrange
                       call flush(lumFile)
                    endif
                    !// Save 2d luminosity for single slice model

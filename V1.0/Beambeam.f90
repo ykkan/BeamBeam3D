@@ -32,7 +32,8 @@ contains
   subroutine bbmSlcnew_Beambeam(nprocrow,npyhalf,innx,inny,&
        nslice1,nslice2,nslice,nsliceO,jendmax,nptlc,myidx,myidy,Pts,&
        grid2d,Ageom,zmin,zmax,nptot,coef,nytot,commrow,commcol,nz,&
-       maxPtclSlice,shift21,curin,flglum,lum3d)
+       maxPtclSlice,shift21,curin,&
+       flglum,lum3d,lum3d_zrange,zrange4lum3d)
     implicit none
     integer, intent(in) :: nprocrow,npyhalf,innx,nslice1,&
          nslice2,myidx,myidy,nptot,nytot,commrow,commcol,nz,&
@@ -68,12 +69,15 @@ contains
     integer :: ibf,sign2
     real*8 :: zbk,hzi1,tmpx3,tmpy3,distance3
 
+    double precision, dimension(2), intent(in) :: zrange4lum3d
+    double precision, intent(out) :: lum3d_zrange
+    double precision :: z_collision
+
     !//shift12 - beam 1 with respect to beam 2
     !//shift21 - beam 2 with respect to beam 1
     shift12 = -shift21
     nxtot = innx
     xtmptmp = 1.0
-    lum3d = 0.0
     nxlum = 128
     nylum = 128
 
@@ -417,10 +421,17 @@ contains
           enddo
 
           !//calculate the 3d luminosity
+          lum3d = 0.0
+          lum3d_zrange = 0.0
           if(flglum.eq.1) then
+             z_collision = ( zslice(i1) + zslice2(j1) ) / 2
              call luminosity2G3d_Output(ray,nptlcslice,nxlum,nylum,&
                   curin,weight(i1),count(i1),myidy,npyhalf,lumtmp)
              lum3d = lum3d + lumtmp
+             write(*,*) z_collision
+             if (z_collision <= zrange4lum3d(2) .and. z_collision >= zrange4lum3d(1)) then
+               lum3d_zrange = lum3d_zrange + lumtmp
+             endif
           endif
        enddo
 

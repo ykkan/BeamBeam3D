@@ -1,8 +1,8 @@
-2 1                                   Npcol, Nprow
+2 2                                   Npcol, Nprow
 6 50000                                 # phase space, # particles
 128 128 1024                             # gridpoints in x, y, z
-1                                      # longitudinal slices 
-100000                                    # number of turns
+2                                      # longitudinal slices 
+10000                                    # number of turns
 2                                      initial distribution (2 Gaussian)
 1d-5 0.2 0.0 1.0 1.0 0.0 0.0      x: sig, be, al, x-sc, px-sc, cn. x, cn px
 1d-5 0.2 0.0 1.0 1.0 0.0 0.0      y: sig, be, al, y-sc, py-sc, cn. y, cn py
