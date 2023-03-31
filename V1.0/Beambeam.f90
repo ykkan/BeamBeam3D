@@ -78,6 +78,8 @@ contains
     shift12 = -shift21
     nxtot = innx
     xtmptmp = 1.0
+    lum3d = 0.0
+    lum3d_zrange = 0.0
     nxlum = 128
     nylum = 128
 
@@ -421,14 +423,11 @@ contains
           enddo
 
           !//calculate the 3d luminosity
-          lum3d = 0.0
-          lum3d_zrange = 0.0
           if(flglum.eq.1) then
              z_collision = ( zslice(i1) + zslice2(j1) ) / 2
              call luminosity2G3d_Output(ray,nptlcslice,nxlum,nylum,&
                   curin,weight(i1),count(i1),myidy,npyhalf,lumtmp)
              lum3d = lum3d + lumtmp
-             write(*,*) z_collision
              if (z_collision <= zrange4lum3d(2) .and. z_collision >= zrange4lum3d(1)) then
                lum3d_zrange = lum3d_zrange + lumtmp
              endif

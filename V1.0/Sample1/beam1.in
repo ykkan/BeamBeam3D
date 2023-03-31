@@ -26,7 +26,7 @@
 2 1                                    PE group, type of s-w interaction
 0. 0.                                  x and y linear chromaticity
 0.                                     curvature of ring
-20                                    luminosity ouput frequency
+40                                    luminosity ouput frequency
 1 1                                    # of bunches, # of steps per turn
 0 1000 1                               restart flag, max time for output (sec), flag whether to save all particles
 200000000                              # turns to reset init. dist.

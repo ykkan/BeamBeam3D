@@ -1135,8 +1135,8 @@ contains
     nylum = 256 !//Grid number of y for luminosity calculation
     lum3d = 0.0
     lum3d_zrange = 0.0
-    zrange4lum3d(1) = -999999.0
-    zrange4lum3d(2) =  999999.0
+    zrange4lum3d(1) = -0.15
+    zrange4lum3d(2) =  0.15
 
     eps = 1.0d-4 !//extra boundary
     factor = 8.0d0 !//scaling factor for the maximum # of particles per slice (tolerance for unequal distribution)
@@ -1485,7 +1485,7 @@ contains
 
                 !// Save 3D luminosity
                 if(flaglum==1) then
-                   if(myid.eq.0) then 
+                   if(myid.eq.0) then
                       write(lumFile,'(1x,i9.1,1x,i9.1,1x,i9.1,1x,i9.1,es16.6,es16.6)')i,ic,idbunch,idbuncho,lum3d,lum3d_zrange
                       call flush(lumFile)
                    endif
