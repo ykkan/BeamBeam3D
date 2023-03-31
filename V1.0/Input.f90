@@ -40,7 +40,8 @@ contains
        oextrange,oflagint,oflagwk,oqx,oqy,ohcv,onfrqlum,otauz,odampflag,&
        onbunch,onsteps,oistart,otmax,saveAll,oNresamp,ptRate,ptFrac,momOutRate,gain,betaCrab,crabFreq,&
        crabvnorm,cfreq2,cvnorm2,np_xy,len_xy,repRate_xy, &
-       ogainx,ogainy,ofrqhighx,ofrqhighy)
+       ogainx,ogainy,ofrqhighx,ofrqhighy, &
+       zrange4lum3d)
 
     implicit none
     include 'mpif.h'
@@ -62,6 +63,7 @@ contains
     double precision, intent(out) :: betaCrab,crabFreq,crabVnorm,cfreq2,cvnorm2
     integer, intent(out) :: np_xy,len_xy,repRate_xy
     real*8, intent(out) :: ogainx,ogainy,ofrqhighx,ofrqhighy
+    double precision, dimension(2), intent(inout) :: zrange4lum3d
 
     integer :: my_rank,ierr,np
 
@@ -117,6 +119,7 @@ contains
        read(13,*)gain(1:4)
        read(13,*)betaCrab,crabFreq,crabVnorm,cfreq2,cvnorm2
        read(13,*)np_xy,len_xy,repRate_xy
+       read(13,*)zrange4lum3d(1), zrange4lum3d(2)
        close(13)
     endif
 
@@ -200,7 +203,7 @@ contains
     call MPI_BCAST(ogainy,1,MPI_DOUBLE_PRECISION,0,mpicommwd,ierr)
     call MPI_BCAST(ofrqhighx,1,MPI_DOUBLE_PRECISION,0,mpicommwd,ierr)
     call MPI_BCAST(ofrqhighy,1,MPI_DOUBLE_PRECISION,0,mpicommwd,ierr)
-
+    call MPI_BCAST(zrange4lum3d,2,MPI_DOUBLE_PRECISION,0,mpicommwd,ierr)
   end subroutine in_Input
 
 

@@ -199,6 +199,10 @@ module AccSimulatorclass
   real*8 :: gainx1,gainy1,frqhighx1,frqhighy1
   real*8 :: gainx2,gainy2,frqhighx2,frqhighy2
   real*8 :: gainx,gainy,frqhighx,frqhighy
+  
+  !// longitudinal range for the luminocity calculation
+  !// i.e., only the slices with positions covered by this range with be considered  
+  double precision, dimension(2) :: zrange4lum3d 
 
 contains
 
@@ -250,7 +254,8 @@ contains
          Extrange1,flagGroup,flagwk,qx1,qy1,hcuv1,nfrqlum,tauz1,flagdamp1,&
          nbunch1,nsteps,idrstart,tmax,saveAll,Nresamp,ptRate,ptFrac,momOutRate,gain1,betaCrab1,crabFreq1,&
          crabVnorm1,cfreq12,cvnorm12,np_xy,len_xy,repRate_xy, &
-         gainx1,gainy1,frqhighx1,frqhighy1)
+         gainx1,gainy1,frqhighx1,frqhighy1, &
+         zrange4lum3d)
 
     !// ensure number of macro particles fits number of cores (per beam)
     tmpvalue = modulo(Np1,npcol*nprow/flagGroup)
@@ -286,7 +291,8 @@ contains
          Extrange2,flagGroup,flagwk,qx2,qy2,hcuv2,nfrqlum,tauz2,flagdamp2,&
          nbunch2,nsteps,idrstart,tmax,saveAll,Nresamp,ptRate,ptFrac,momOutRate,gain2,betaCrab2,crabFreq2,&
          crabVnorm2,cfreq22,cvnorm22,np_xy,len_xy,repRate_xy,&
-         gainx2,gainy2,frqhighx2,frqhighy2)
+         gainx2,gainy2,frqhighx2,frqhighy2, &
+         zrange4lum3d)
 
     !// Ensure number of macro particles fits number of cores (per beam)
     tmpvalue = modulo(Np2,npcol*nprow/flagGroup)
@@ -1089,7 +1095,6 @@ contains
     real*8 :: b2,b3,b4,b5,b6,b7,eng0
 
     double precision :: lum3d_zrange 
-    double precision, dimension(2) :: zrange4lum3d
 
     call starttime_Timer(t0)
     call MPI_BARRIER(mpicommwd,ierr)
@@ -1135,8 +1140,6 @@ contains
     nylum = 256 !//Grid number of y for luminosity calculation
     lum3d = 0.0
     lum3d_zrange = 0.0
-    zrange4lum3d(1) = -0.15
-    zrange4lum3d(2) =  0.15
 
     eps = 1.0d-4 !//extra boundary
     factor = 8.0d0 !//scaling factor for the maximum # of particles per slice (tolerance for unequal distribution)

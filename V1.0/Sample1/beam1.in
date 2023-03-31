@@ -34,3 +34,4 @@
 0.0d0 0.0d0 0.0d0 0.0d0                    FB gains related to BPMs: hor., sector 7; h. s. 9; v. s. 7; v. s. 9
 4.d3 0.0 0.0 0.0 0.0				beta at crab cavity (m), crab frequency (Hz)
 2 8 25000                             xy series: number of particles, length (turns), repetition rate (turns)
+-0.15 0.15                            longitudinal spatial range (lower/upper bound) for the luminosity calculation
