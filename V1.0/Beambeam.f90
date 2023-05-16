@@ -80,8 +80,8 @@ contains
     xtmptmp = 1.0
     lum3d = 0.0
     lum3d_zrange = 0.0
-    nxlum = 128
-    nylum = 128
+    nxlum = 256
+    nylum = 256
 
     !//set up the parameters for the lower group and upper group processors.
     if(myidy.lt.npyhalf) then
